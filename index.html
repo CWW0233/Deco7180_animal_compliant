@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brisbane Animal Complaint Analysis</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <!-- Chart.js for charts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- ── HEADER ── -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-title-block">
+        <h1 class="site-title">Brisbane Animal Complaint Analysis System</h1>
+        <p class="site-subtitle">Exploring the correlation between population density and animal complaints</p>
+      </div>
+      <div class="header-badge">2026 · Live Data</div>
+    </div>
+  </header>
+
+  <!-- ── STATS SUMMARY ── -->
+  <section class="stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-card" style="--delay:0s">
+          <div class="stat-icon">⚠️</div>
+          <div class="stat-body">
+            <span class="stat-label">Total Complaints</span>
+            <span class="stat-value" id="stat-total">1,845</span>
+            <span class="stat-change up">+12% this month</span>
+          </div>
+        </div>
+        <div class="stat-card" style="--delay:0.08s">
+          <div class="stat-icon">📍</div>
+          <div class="stat-body">
+            <span class="stat-label">Areas Covered</span>
+            <span class="stat-value">10</span>
+            <span class="stat-change neutral">Brisbane main areas</span>
+          </div>
+        </div>
+        <div class="stat-card" style="--delay:0.16s">
+          <div class="stat-icon">👥</div>
+          <div class="stat-body">
+            <span class="stat-label">Total Population</span>
+            <span class="stat-value">117,500</span>
+            <span class="stat-change neutral">Across all suburbs</span>
+          </div>
+        </div>
+        <div class="stat-card" style="--delay:0.24s">
+          <div class="stat-icon">📈</div>
+          <div class="stat-body">
+            <span class="stat-label">Average Density</span>
+            <span class="stat-value">15.7</span>
+            <span class="stat-change neutral">per 1k people</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── NAVIGATION TABS ── -->
+  <nav class="tab-nav">
+    <div class="container">
+      <div class="tab-row">
+        <button class="tab-btn active" data-tab="map">
+          <span class="tab-icon">🗺</span> Interactive Map
+        </button>
+        <button class="tab-btn" data-tab="upload">
+          <span class="tab-icon">📤</span> Submit Complaint
+        </button>
+        <button class="tab-btn" data-tab="ranking">
+          <span class="tab-icon">🏆</span> Animal Rankings
+        </button>
+        <button class="tab-btn" data-tab="solutions">
+          <span class="tab-icon">💡</span> Solutions
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── MAIN CONTENT ── -->
+  <main class="main-content">
+    <div class="container">
+
+      <!-- TAB: MAP -->
+      <div class="tab-panel active" id="tab-map">
+        <div class="panel-card map-card">
+          <div class="map-controls">
+            <button class="view-btn active" data-view="complaints">Complaint Count</button>
+            <button class="view-btn" data-view="density">Complaint Density</button>
+          </div>
+
+          <div class="map-wrap">
+            <div class="map-label">📍 Brisbane Area Heatmap</div>
+            <svg id="map-svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+              <!-- Circles rendered by JS -->
+            </svg>
+            <div class="map-legend" id="map-legend"></div>
+            <div class="map-tooltip hidden" id="map-tooltip"></div>
+          </div>
+          <p class="map-hint">Hover over circles to view detailed information</p>
+        </div>
+
+        <!-- DATA TABLE -->
+        <div class="panel-card table-card">
+          <div class="table-header">
+            <h2 class="card-title">Detailed Area Data Table</h2>
+            <p class="card-sub">Click column headers to sort</p>
+          </div>
+          <div class="table-wrap">
+            <table id="data-table">
+              <thead>
+                <tr>
+                  <th data-col="area">Area <span class="sort-icon">↕</span></th>
+                  <th data-col="population" class="right">Population <span class="sort-icon">↕</span></th>
+                  <th data-col="complaints" class="right">Complaints <span class="sort-icon">↕</span></th>
+                  <th data-col="density" class="right">Density (per 1k) <span class="sort-icon">↕</span></th>
+                </tr>
+              </thead>
+              <tbody id="table-body"></tbody>
+            </table>
+          </div>
+          <div class="table-footer" id="table-footer"></div>
+        </div>
+      </div>
+
+      <!-- TAB: UPLOAD -->
+      <div class="tab-panel" id="tab-upload">
+        <div class="upload-layout">
+          <!-- Form -->
+          <div class="panel-card">
+            <h2 class="card-title">Submit Animal Complaint</h2>
+            <form id="complaint-form" class="complaint-form">
+              <div class="form-group">
+                <label class="form-label">Animal Type</label>
+                <select id="animal-type" class="form-control" required>
+                  <option value="">Select Animal</option>
+                  <option value="dog">Dog</option>
+                  <option value="cat">Cat</option>
+                  <option value="bird">Bird</option>
+                  <option value="deer">Deer</option>
+                  <option value="possum">Possum</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">📍 Location</label>
+                <input type="text" id="location" class="form-control" placeholder="e.g., Brisbane City, Fortitude Valley" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Description</label>
+                <textarea id="description" class="form-control" rows="3" placeholder="Describe the complaint in detail..."></textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-label">📤 Upload Photo (Optional)</label>
+                <div class="upload-zone" id="upload-zone">
+                  <input type="file" id="photo-file" accept="image/*" hidden />
+                  <div class="upload-inner" id="upload-inner">
+                    <span class="upload-emoji">📷</span>
+                    <span>Click to upload image</span>
+                  </div>
+                  <img id="photo-preview" class="photo-preview hidden" alt="Preview" />
+                </div>
+              </div>
+              <button type="submit" class="submit-btn">Submit Complaint</button>
+              <div class="toast hidden" id="form-toast"></div>
+            </form>
+          </div>
+
+          <!-- Guidelines -->
+          <div class="panel-card guidelines-card">
+            <h2 class="card-title">Complaint Guidelines</h2>
+            <div class="guideline-section">
+              <h3 class="guideline-heading">How to submit an effective complaint?</h3>
+              <ul class="guideline-list">
+                <li>Provide accurate location information</li>
+                <li>Describe the issue in detail</li>
+                <li>Upload relevant photos if possible</li>
+                <li>Select the correct animal type</li>
+              </ul>
+            </div>
+            <div class="guideline-section">
+              <h3 class="guideline-heading">Common complaint types</h3>
+              <ul class="guideline-list">
+                <li>Excessive barking</li>
+                <li>Off-leash incidents</li>
+                <li>Aggressive behavior</li>
+                <li>Environmental hygiene issues</li>
+              </ul>
+            </div>
+            <div class="tip-box">
+              💡 Tip: After submitting a complaint, the relevant department will process your case within 3–5 business days.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: RANKING -->
+      <div class="tab-panel" id="tab-ranking">
+        <div class="panel-card">
+          <div class="card-header-row">
+            <span class="card-icon">📈</span>
+            <h2 class="card-title">Most Complained Animals</h2>
+          </div>
+          <div class="ranking-list" id="ranking-list"></div>
+          <div class="ranking-footer">Data Updated: March 23, 2026</div>
+        </div>
+      </div>
+
+      <!-- TAB: SOLUTIONS -->
+      <div class="tab-panel" id="tab-solutions">
+        <!-- Scatter: Population vs Complaints -->
+        <div class="panel-card">
+          <div class="card-header-row">
+            <span class="card-icon">📊</span>
+            <h2 class="card-title">Population Density vs Complaints Analysis</h2>
+          </div>
+          <p class="card-desc">Analysis shows: areas with higher population density (such as Fortitude Valley and Brisbane City) indeed have more animal complaint cases.</p>
+          <div class="chart-wrap">
+            <canvas id="scatter-chart"></canvas>
+          </div>
+        </div>
+
+        <!-- Bar: Solutions votes -->
+        <div class="panel-card">
+          <div class="card-header-row">
+            <span class="card-icon">✅</span>
+            <h2 class="card-title">Proposed Solutions by Public</h2>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="solutions-chart"></canvas>
+          </div>
+          <!-- Progress bars -->
+          <div class="solution-bars" id="solution-bars"></div>
+        </div>
+
+        <!-- Pie + Timeline -->
+        <div class="two-col">
+          <div class="panel-card">
+            <h3 class="card-title">Priority Distribution</h3>
+            <div class="chart-wrap-sm">
+              <canvas id="priority-chart"></canvas>
+            </div>
+          </div>
+          <div class="panel-card">
+            <h3 class="card-title">Complaint Trends (Last 6 Months)</h3>
+            <div class="chart-wrap-sm">
+              <canvas id="timeline-chart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer class="site-footer">
+    <p>© 2026 Brisbane Animal Complaint Analysis System | Data Updated: March 23, 2026</p>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
