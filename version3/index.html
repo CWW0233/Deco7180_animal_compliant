@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wildlife Safety App</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+<header>
+    <h1>Wildlife Safety</h1>
+    <nav>
+        <button onclick="showSection('map')">Map</button>
+        <button onclick="showSection('identify')">Animal ID</button>
+        <button onclick="showSection('scare')">Deterrent</button>
+        <button onclick="showSection('firstaid')">After Attack</button>
+    </nav>
+</header>
+
+<main>
+    <!-- Section 1: Map -->
+    <section id="map" class="active-section card-section">
+        <h2>Wildlife Complaints Map</h2>
+        <div id="mapid"></div>
+    </section>
+
+    <!-- Section 2: Animal Identification -->
+    <section id="identify" class="card-section">
+        <h2>Identify Animal & Learn</h2>
+        <div class="card">
+            <input type="file" id="animalUpload" accept="image/*">
+            <button class="primary-btn" onclick="identifyAnimal()">Identify</button>
+            <div id="animalResult" class="result-card"></div>
+        </div>
+    </section>
+
+    <!-- Section 3: Deterrent Sounds -->
+    <section id="scare" class="card-section">
+        <h2>Deterrent Sounds</h2>
+        <div class="card sound-card">
+            <button class="primary-btn" onclick="playSound('bird')">Bird Sound</button>
+            <button class="primary-btn" onclick="playSound('dog')">Dog Sound</button>
+            <audio id="audioPlayer" controls style="display:none;"></audio>
+        </div>
+    </section>
+
+    <!-- Section 4: After Attack -->
+    <section id="firstaid" class="card-section">
+        <h2>After Animal Attack</h2>
+        <div class="card">
+            <h3>Step 1: Immediate Care</h3>
+            <ul>
+                <li>Clean wound with running water and soap.</li>
+                <li>Apply antiseptic and cover with sterile dressing.</li>
+            </ul>
+            <h3>Step 2: Seek Medical Help</h3>
+            <ul>
+                <li>Visit nearest hospital or clinic.</li>
+                <li>Bring vaccination & insurance info.</li>
+            </ul>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2026 Wildlife Safety App</p>
+</footer>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>

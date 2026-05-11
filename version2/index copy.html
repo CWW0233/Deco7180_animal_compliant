@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wildlife Safety App</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+    <header>
+        <h1>Wildlife Safety App</h1>
+        <nav>
+            <button onclick="showSection('map')">Map</button>
+            <button onclick="showSection('identify')">Animal ID</button>
+            <button onclick="showSection('scare')">Deterrent Sounds</button>
+            <button onclick="showSection('firstaid')">After Attack</button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Section 1: Map -->
+        <section id="map" class="active-section">
+            <h2>Wildlife Complaints Map</h2>
+            <div id="mapid"></div>
+        </section>
+
+        <!-- Section 2: Animal Identification -->
+        <section id="identify">
+            <h2>Identify Animal & Learn</h2>
+            <input type="file" id="animalUpload" accept="image/*">
+            <button onclick="identifyAnimal()">Identify</button>
+            <div id="animalResult"></div>
+        </section>
+
+        <!-- Section 3: Deterrent Sounds -->
+        <section id="scare">
+            <h2>Play Deterrent Sound</h2>
+            <button onclick="playSound('bird')">Bird Deterrent</button>
+            <button onclick="playSound('dog')">Dog Deterrent</button>
+            <audio id="audioPlayer" controls style="display:none;"></audio>
+        </section>
+
+        <!-- Section 4: After Attack -->
+        <section id="firstaid">
+            <h2>After Animal Attack</h2>
+            <div class="firstaid-content">
+                <h3>Step 1: Immediate Care</h3>
+                <ul>
+                    <li>Clean the wound with running water and soap.</li>
+                    <li>Apply antiseptic and cover with sterile dressing.</li>
+                </ul>
+                <h3>Step 2: Seek Medical Help</h3>
+                <ul>
+                    <li>Go to the nearest hospital or clinic.</li>
+                    <li>Bring vaccination and insurance info for faster processing.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Wildlife Safety App</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
