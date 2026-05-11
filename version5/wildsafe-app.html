@@ -797,7 +797,6 @@ body {
 .sos-callout {
   display: flex; flex-direction: column; gap: 10px;
   padding: 16px;
-  margin-bottom: 80px;
 }
 .call-btn {
   display: flex; align-items: center; justify-content: center; gap: 10px;
@@ -1117,6 +1116,16 @@ body {
     <button class="sos-tab" onclick="switchSosTab('insurance')">📋 Insurance</button>
   </div>
 
+  <!-- BOTTOM EMERGENCY CALL -->
+  <div class="sos-callout">
+    <a href="tel:000" class="call-btn">
+      <span class="call-icon">📞</span> Call 000 — Emergency
+    </a>
+    <a href="tel:13HEALTH" class="call-btn call-btn-secondary">
+      <span class="call-icon">💊</span> 13 HEALTH (QLD)
+    </a>
+  </div>
+
   <!-- WOUND CARE -->
   <div id="sos-wound" class="sos-section active">
     <div class="sos-urgent">
@@ -1147,15 +1156,7 @@ body {
     <div class="ins-steps" id="ins-steps"></div>
   </div>
 
-  <!-- BOTTOM EMERGENCY CALL -->
-  <div class="sos-callout">
-    <a href="tel:000" class="call-btn">
-      <span class="call-icon">📞</span> Call 000 — Emergency
-    </a>
-    <a href="tel:13HEALTH" class="call-btn call-btn-secondary">
-      <span class="call-icon">💊</span> 13 HEALTH (QLD)
-    </a>
-  </div>
+  
 </div>
 
 <!-- ═══════════════════════════════════════════════
