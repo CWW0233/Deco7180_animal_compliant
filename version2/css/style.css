@@ -1,0 +1,66 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f7f6;
+}
+
+header {
+  background: #2c6e49;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  background: #d8f3dc;
+}
+
+nav button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background: none;
+  font-size: 14px;
+}
+
+main {
+  padding: 15px;
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+/* Map */
+#mapArea {
+  position: relative;
+  height: 300px;
+  background: #cdeac0;
+  border-radius: 10px;
+}
+
+.dot {
+  position: absolute;
+  font-size: 20px;
+}
+
+/* Card */
+.card {
+  background: white;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 10px;
+}
+
+/* Mobile优化 */
+@media (max-width: 600px) {
+  nav button {
+    font-size: 12px;
+  }
+}
